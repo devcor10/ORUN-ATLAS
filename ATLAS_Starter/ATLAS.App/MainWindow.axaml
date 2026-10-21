@@ -1,0 +1,69 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ATLAS.App.ViewModels"
+        x:Class="ATLAS.App.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="ORUN ATLAS"
+        Width="1200" Height="800"
+        Background="#1a1a1a">
+
+  <Grid RowDefinitions="Auto,*,Auto">
+    <!-- Header -->
+    <Border Grid.Row="0" Background="#111" Padding="16,12" BorderBrush="#333" BorderThickness="0,0,0,1">
+      <Grid ColumnDefinitions="Auto,*,Auto">
+        <StackPanel Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+          <!-- ORUN Logo placeholder - replace with actual ORUNLogo asset -->
+          <Border Width="36" Height="36" CornerRadius="18" BorderBrush="#c9a227" BorderThickness="2"
+                  HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="O" Foreground="#c9a227" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+          <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="ORUN" FontSize="20" FontWeight="Bold" Foreground="White"/>
+            <TextBlock Text="ATLAS" FontSize="11" Foreground="#c9a227"/>
+          </StackPanel>
+        </StackPanel>
+
+        <TextBlock Grid.Column="1" Text="{Binding UnitName}" FontSize="16" Foreground="#ddd"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+          <TextBlock Text="SENTINEL" Foreground="#c9a227" FontSize="12" VerticalAlignment="Center"/>
+          <TextBlock Text="{Binding SentinelStatus}" Foreground="White" FontSize="12" VerticalAlignment="Center"/>
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <!-- Main content: Quiet Board or Exception -->
+    <Grid Grid.Row="1">
+      <!-- Quiet Board -->
+      <Grid IsVisible="{Binding !HasException}">
+        <TextBlock Text="UNIT OVERVIEW — NO SELECTION"
+                   Foreground="#555" FontSize="18"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+      </Grid>
+
+      <!-- Large Exception -->
+      <Border IsVisible="{Binding HasException}" Background="#222" Margin="40" Padding="32" CornerRadius="4"
+              BorderBrush="#c9a227" BorderThickness="1">
+        <StackPanel Spacing="16">
+          <TextBlock Text="EXCEPTION" Foreground="#c9a227" FontSize="12" FontWeight="Bold"/>
+          <TextBlock Text="{Binding ExceptionTitle}" FontSize="42" FontWeight="Bold" Foreground="White"/>
+          <TextBlock Text="{Binding ExceptionDetail}" FontSize="16" Foreground="#ccc" TextWrapping="Wrap"/>
+          <Button Content="REVIEW" HorizontalAlignment="Left" Padding="24,10"
+                  Background="#c9a227" Foreground="Black" FontWeight="Bold"
+                  Command="{Binding ClearExceptionCommand}"/>
+        </StackPanel>
+      </Border>
+    </Grid>
+
+    <!-- Footer -->
+    <Border Grid.Row="2" Background="#111" Padding="16,8" BorderBrush="#333" BorderThickness="0,1,0,0">
+      <Grid ColumnDefinitions="Auto,*,Auto">
+        <TextBlock Text="{Binding CurrentTime}" Foreground="#888" FontSize="12"/>
+        <TextBlock Grid.Column="1" Text="{Binding CountDisplay}" Foreground="#ccc" FontSize="12"
+                   HorizontalAlignment="Center"/>
+        <TextBlock Grid.Column="2" Text="SYSTEM NORMAL" Foreground="#c9a227" FontSize="12"/>
+      </Grid>
+    </Border>
+  </Grid>
+</Window>
